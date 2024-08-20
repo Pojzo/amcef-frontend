@@ -18,7 +18,6 @@ const useRegister = () => {
             if (!response.data.token) {
                 throw new Error("No token in response")
             }
-            console.log(response.data);
 
             return response.data.token;
         }

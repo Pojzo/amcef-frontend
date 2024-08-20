@@ -21,12 +21,17 @@ const useLogin = () => {
             return response.data.token;
         }
         catch (err: unknown) {
-            if (err instanceof Error) {
+            console.log('isAxiosError', axios.isAxiosError(err));
+            console.log('is instance of Error', err instanceof Error);
+
+            if (axios.isAxiosError(err)) {
+                console.error("response", err.response?.data);
+                setError(err.response?.data.message || "An unknown error occurred")
+            }
+            else if (err instanceof Error) {
                 setError(err.message)
             }
-            else if (axios.isAxiosError(err)) {
-                setError(err.response?.data || "An unknown error occurred")
-            }
+           
             else {
                 setError("An unknown error occurred")
             }

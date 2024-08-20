@@ -23,7 +23,7 @@ const Register = ({ onChange }: { onChange: () => void }) => {
                 <button type="submit">Register</button>
             </form>
             {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
+            {error && <p style={{color: 'red'}}>{error.includes("409") ? "User already exists" : error}</p>}
         </div>
     );
 }

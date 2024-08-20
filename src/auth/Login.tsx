@@ -28,7 +28,7 @@ const Login = ({ onChange }: { onChange: () => void }) => {
             </form>
             {loading && <p style={{ color: 'blue' }}>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            {token && <p>{token}</p>}
+            {token && <p style={{color: 'green'}}>Successfully logged in</p>}
         </div>
     );
 }
