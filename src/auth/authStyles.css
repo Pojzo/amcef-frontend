@@ -1,49 +1,49 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
 .register {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
 }
 
 .nav-buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .nav-button {
-    width: 100px;
-    height: 50px;
-    background-color: blue;
-    margin: 10px;
+	width: 100px;
+	height: 50px;
+	background-color: blue;
+	margin: 10px;
 }
 
 .button-text {
-    color: 'white';
-    font-size: large;
+	color: "white";
+	font-size: large;
 }
 
 .login-status {
-    position: absolute;
-    right: 10px;
-    top: 0;
+	position: absolute;
+	right: 10px;
+	top: 0;
 }
