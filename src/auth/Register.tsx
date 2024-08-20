@@ -1,9 +1,10 @@
 import { useState } from "react";
-import useRegister from "./hooks/useRegister";
-import './styles.css';
+import useRegister from "../hooks/useRegister";
+
+import '../styles.css';
 
 
-const Register = () => {
+const Register = ({ onChange }: { onChange: () => void }) => {
     const { error, loading, register } = useRegister();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");

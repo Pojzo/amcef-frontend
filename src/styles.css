@@ -25,3 +25,27 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
+
+.nav-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.nav-button {
+    width: 100px;
+    height: 50px;
+    background-color: blue;
+    margin: 10px;
+}
+
+.button-text {
+    color: 'white';
+    font-size: large;
+}
+
+.login-status {
+    position: absolute;
+    right: 10px;
+    top: 0;
+}

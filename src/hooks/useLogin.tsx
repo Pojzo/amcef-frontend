@@ -37,8 +37,7 @@ const useLogin = () => {
             setLoading(false)
         }
     }
-
-    return { loading, error, login };
+    return { error, loading, login }
 }
 
 export default useLogin
