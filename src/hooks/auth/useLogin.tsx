@@ -23,9 +23,6 @@ const useLogin = () => {
 
 			return response.data.token;
 		} catch (err: unknown) {
-			console.log("isAxiosError", axios.isAxiosError(err));
-			console.log("is instance of Error", err instanceof Error);
-
 			if (axios.isAxiosError(err)) {
 				console.error("response", err.response?.data);
 				setError(

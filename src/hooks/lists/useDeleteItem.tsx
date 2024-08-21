@@ -4,13 +4,13 @@ import { getJwtToken } from "../../utils";
 import { useState } from "react";
 
 const useDeleteItem = () => {
-	const [createItemError, setCreateItemError] = useState<string | null>(null);
-	const [createItemLoading, setCreateItemLoading] = useState<boolean>(false);
+	const [deleteItemError, setDeleteItemError] = useState<string | null>(null);
+	const [deleteItemLoading, setDeleteItemLoading] = useState<boolean>(false);
 
 	const deleteItem = async (listId: number, itemId: number) => {
 		try {
-			setCreateItemError(null);
-			setCreateItemLoading(true);
+			setDeleteItemError(null);
+			setDeleteItemLoading(true);
 
 			const fullUrl = `${BASE_URL}/lists/${listId}/items/${itemId}`;
 			const token = await getJwtToken();
@@ -24,19 +24,19 @@ const useDeleteItem = () => {
 			console.log(response);
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
-				setCreateItemError(err.message);
+				setDeleteItemError(err.message);
 			}
 			if (err instanceof Error) {
-				setCreateItemError(err.message);
+				setDeleteItemError(err.message);
 			} else {
-				setCreateItemError("An error occurred");
+				setDeleteItemError("An error occurred");
 			}
 		} finally {
-			setCreateItemLoading(false);
+			setDeleteItemLoading(false);
 		}
 	};
 
-	return { deleteItem, createItemError, createItemLoading };
+	return { deleteItem, deleteItemError, deleteItemLoading };
 };
 
 export default useDeleteItem;

@@ -14,9 +14,8 @@ const Register = ({ onChange }: { onChange: () => void }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		onChange();
 		e.preventDefault();
-		const response = await register(email, password);
-		checkLoggedIn();
-		console.log(response);
+		await register(email, password);
+		await checkLoggedIn();
 	};
 	return (
 		<div className="register">

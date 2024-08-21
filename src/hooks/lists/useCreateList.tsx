@@ -4,8 +4,8 @@ import { getJwtToken } from "../../utils";
 import { BASE_URL } from "../../config";
 
 const useCreateList = () => {
-	const [error, setError] = useState<string | null>(null);
-	const [loading, setLoading] = useState<Boolean>(false);
+	const [createListError, setCreateListError] = useState<string | null>(null);
+	const [createListLoading, setCreateListLoading] = useState<Boolean>(false);
 
 	const createList = async (title: string) => {
 		try {
@@ -14,7 +14,7 @@ const useCreateList = () => {
 			const token = await getJwtToken();
 
 			if (!token) {
-				setError("Not logged in ");
+				setCreateListError("Not logged in ");
 				return;
 			}
 			await axios.post(
@@ -28,15 +28,15 @@ const useCreateList = () => {
 			);
 		} catch (err) {
 			if (axios.isAxiosError(err)) {
-				setError(
+				setCreateListError(
 					err.response?.data.message || "An unknown error occurred"
 				);
 			} else {
-				setError("An unknown error occurred");
+				setCreateListError("An unknown error occurred");
 			}
 		}
 	};
-	return { error, loading, createList };
+	return { createListError, createListLoading, createList };
 };
 
 export default useCreateList;

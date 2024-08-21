@@ -2,27 +2,33 @@ import axios from "axios";
 import { BASE_URL } from "../../config";
 import { getJwtToken } from "../../utils";
 import { useState } from "react";
-import { CreateItemType } from "../../types";
+import { ItemBaseType, ItemCreateType } from "../../types";
 
 const useCreateItem = () => {
 	const [createItemError, setCreateItemError] = useState<string | null>(null);
 	const [createItemLoading, setCreateItemLoading] = useState<boolean>(false);
 
-	const createItem = async (listId: number, item: CreateItemType) => {
+	const createItem = async (item: ItemCreateType) => {
 		try {
 			setCreateItemError(null);
 			setCreateItemLoading(true);
 
-			const data = { ...item, listId };
-			const fullUrl = `${BASE_URL}/lists/${listId}/items`;
+			const data: ItemBaseType = {
+				title: item.title,
+				description: item.description,
+				flag: item.flag,
+				deadline: item.deadline,
+			};
+
+			const url = `${BASE_URL}/lists/${item.listId}/items`;
+
 			const token = await getJwtToken();
 			if (!token) {
 				throw new Error("Token not found");
 			}
-			const response = await axios.post(fullUrl, data, {
+			await axios.post(url, data, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			console.log(response);
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
 				setCreateItemError(err.message);

@@ -1,11 +1,5 @@
 // context/AuthContext.tsx
-import React, {
-	createContext,
-	useContext,
-	ReactNode,
-	useState,
-	useEffect,
-} from "react";
+import React, { createContext, useContext, ReactNode, useEffect } from "react";
 import useCheckLoggedIn from "../hooks/auth/useCheckLoggedIn";
 import useLogout from "../hooks/auth/useLogout";
 

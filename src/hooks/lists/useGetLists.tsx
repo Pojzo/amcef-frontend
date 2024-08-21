@@ -1,22 +1,20 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { getJwtToken } from "../../utils";
 import { BASE_URL } from "../../config";
 import { GetListsResponse } from "../../types";
 
 const useGetLists = () => {
-	const [error, setError] = useState<string | null>(null);
-	const [loading, setLoading] = useState<Boolean>(false);
+	const [getListsError, setGetListsError] = useState<string | null>(null);
+	const [getListsLoading, setGetListsLoading] = useState<Boolean>(false);
 
 	const getLists = async (getAll: boolean = true) => {
 		try {
+			setGetListsError(null);
+			setGetListsLoading(true);
 			const fullUrl = `${BASE_URL}/lists${getAll ? "" : "/my-lists"}`;
 
-			const token = getJwtToken();
-			if (!token && !getAll) {
-				setError("Not logged in ");
-				return;
-			}
+			const token = await getJwtToken();
 
 			const response = await axios.get<GetListsResponse>(fullUrl, {
 				headers: {
@@ -26,15 +24,17 @@ const useGetLists = () => {
 			return response.data.lists;
 		} catch (err) {
 			if (axios.isAxiosError(err)) {
-				setError(
+				setGetListsError(
 					err.response?.data.message || "An unknown error occurred"
 				);
 			} else {
-				setError("An unknown error occurred");
+				setGetListsError("An unknown error occurred");
 			}
+		} finally {
+			setGetListsLoading(false);
 		}
 	};
-	return { error, loading, getLists };
+	return { getListsError, getListsLoading, getLists };
 };
 
 export default useGetLists;

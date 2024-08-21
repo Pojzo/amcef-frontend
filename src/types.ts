@@ -4,28 +4,35 @@ export enum ItemFlag {
 	Aborted = "aborted",
 }
 
-export interface ItemType {
-	itemId: number;
-	listId: number;
-	createdBy: number;
+export interface ItemBaseType {
 	title: string;
 	description: string;
 	deadline: string;
 	flag: ItemFlag;
 }
 
-export interface CreateItemType {
-	title: string;
-	description: string;
-	deadline: string;
-	flag: ItemFlag;
+export interface ItemType extends ItemBaseType {
+	listId: number;
+	itemId: number;
+	createdBy: number;
+}
+
+export interface ItemCreateType extends ItemBaseType {
+	listId?: number;
+}
+
+export interface ItemUpdateType extends ItemBaseType {
+	listId: number;
+	itemId: number;
 }
 
 export interface ListType {
-	createdBy: number;
+	creatorEmail: string;
+	isCreator: boolean;
 	listId: number;
 	title: string;
 	items: ItemType[];
+	users: string[];
 }
 
 export interface GetListsResponse {

@@ -81,8 +81,49 @@
 	position: absolute;
 	top: 10px;
 	right: 10px;
-	background: none;
+	width: 24px;
+	height: 24px;
+	background: transparent;
 	border: none;
-	font-size: 1.2em;
 	cursor: pointer;
+	font-size: 18px;
+	color: #000; /* or another color that contrasts with the background */
+}
+
+.close-button::before {
+	content: "✖"; /* Unicode character for the 'X' symbol */
+	display: block;
+	text-align: center;
+	line-height: 24px; /* Ensure this matches the height of the button */
+}
+
+.user-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.user-email {
+	font-size: 16px;
+	color: #333;
+}
+
+.delete-button {
+	display: flex;
+	align-items: center;
+}
+
+.delete-button button {
+	background: transparent;
+	border: none;
+	color: #f00;
+	cursor: pointer;
+	font-size: 18px;
+	transition: color 0.3s;
+}
+
+.delete-button button:hover {
+	color: #c00;
 }

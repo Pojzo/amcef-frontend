@@ -5,18 +5,18 @@ import { BASE_URL } from "../../config";
 import { GetListsResponse } from "../../types";
 
 const useDeleteList = () => {
-	const [listDeleteError, setListDeleteError] = useState<string | null>(null);
-	const [listDeleteLoading, setListDeleteLoading] = useState<Boolean>(false);
+	const [deleteListError, setDeleteListError] = useState<string | null>(null);
+	const [deleteListLoading, setDeleteListLoading] = useState<Boolean>(false);
 	const deleteList = async (listId: number) => {
 		try {
-			setListDeleteLoading(true);
-			setListDeleteError(null);
+			setDeleteListLoading(true);
+			setDeleteListError(null);
 			const fullUrl = `${BASE_URL}/lists/${listId}`;
 
 			const token = await getJwtToken();
 
 			if (!token) {
-				setListDeleteError("Not logged in ");
+				setDeleteListError("Not logged in ");
 				return;
 			}
 			const response = await axios.delete(fullUrl, {
@@ -26,17 +26,21 @@ const useDeleteList = () => {
 			});
 		} catch (err) {
 			if (axios.isAxiosError(err)) {
-				setListDeleteError(
+				setDeleteListError(
 					err.response?.data.message || "An unknown error occurred"
 				);
 			} else {
-				setListDeleteError("An unknown error occurred");
+				setDeleteListError("An unknown error occurred");
 			}
 		} finally {
-			setListDeleteLoading(false);
+			setDeleteListLoading(false);
 		}
 	};
-	return { listDeleteError, listDeleteLoading, deleteList };
+	return {
+		deleteListError,
+		deleteListLoading,
+		deleteList,
+	};
 };
 
 export default useDeleteList;

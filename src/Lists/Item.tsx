@@ -1,32 +1,25 @@
 import { useState } from "react";
-import { ItemType, ItemFlag, CreateItemType } from "../types";
+import { ItemType, ItemFlag, ItemUpdateType } from "../types";
 import "./listStyles.css";
 
-const Item = ({
-	item,
-	onSubmit,
-	onDelete,
-	isCreate = true,
-	btnDisabled = false,
-}: {
+interface ItemProps {
 	item: ItemType;
-	onSubmit: (item: ItemType | CreateItemType) => void;
-	onDelete?: () => void;
-	isCreate: boolean;
-	btnDisabled?: boolean;
-}) => {
-	const itemId = item.itemId;
-	const listId = item.listId;
-	const createdBy = item.createdBy;
+	onItemDelete: () => void;
+	onItemUpdate: (item: ItemUpdateType) => void;
+	btnDisabled: boolean;
+}
 
-	const [title, setTitle] = useState(item.title);
-	const [description, setDescription] = useState(item.description);
+const Item = (props: ItemProps) => {
+	const itemId = props.item.itemId;
+	const listId = props.item.listId;
+	// const createdBy = props.item.createdBy;
+
+	const [title, setTitle] = useState(props.item.title);
+	const [description, setDescription] = useState(props.item.description);
 	const [deadline, setDeadline] = useState(
-		new Date(item.deadline).toISOString().slice(0, 16)
+		new Date(props.item.deadline).toISOString().slice(0, 16)
 	);
-	const [flag, setFlag] = useState(item.flag);
-
-	console.log(deadline);
+	const [flag, setFlag] = useState(props.item.flag);
 
 	const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.stopPropagation();
@@ -51,25 +44,20 @@ const Item = ({
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (isCreate) {
-			onSubmit({ title, description, deadline, flag });
-		} else {
-			onSubmit({
-				itemId,
-				listId,
-				createdBy,
-				title,
-				description,
-				deadline,
-				flag,
-			});
-		}
+		props.onItemUpdate({
+			itemId,
+			listId,
+			title,
+			description,
+			deadline,
+			flag,
+		});
 	};
 
 	return (
 		<form
 			className="item-form"
-			onSubmit={handleSubmit}
+			// onSubmit={handleSubmit}
 			onClick={(e) => e.stopPropagation()}
 		>
 			<div className="form-group">
@@ -79,7 +67,7 @@ const Item = ({
 					id="title"
 					name="title"
 					value={title}
-					readOnly={btnDisabled ? true : false}
+					readOnly={props.btnDisabled ? true : false}
 					onChange={handleTitleChange}
 				/>
 			</div>
@@ -91,7 +79,7 @@ const Item = ({
 					id="description"
 					name="description"
 					value={description}
-					readOnly={btnDisabled ? true : false}
+					readOnly={props.btnDisabled ? true : false}
 					onChange={handleDescriptionChange}
 				/>
 			</div>
@@ -103,7 +91,7 @@ const Item = ({
 					id="deadline"
 					name="deadline"
 					value={deadline}
-					readOnly={btnDisabled ? true : false}
+					readOnly={props.btnDisabled ? true : false}
 					onChange={handleDeadlineChange}
 				/>
 			</div>
@@ -114,7 +102,7 @@ const Item = ({
 					id="flag"
 					name="flag"
 					value={flag}
-					disabled={btnDisabled}
+					disabled={props.btnDisabled}
 					onChange={(e) =>
 						handleOptionChange(e.target.value as ItemFlag)
 					}
@@ -124,7 +112,7 @@ const Item = ({
 					<option value="aborted">Aborted</option>
 				</select>
 			</div>
-			{!btnDisabled && !isCreate && (
+			{!props.btnDisabled && (
 				<button
 					type="button"
 					className="submit-button"
@@ -132,39 +120,17 @@ const Item = ({
 						color: "white",
 						backgroundColor: "red",
 					}}
-					onClick={onDelete}
+					onClick={props.onItemDelete}
 				>
 					Delete item
 				</button>
 			)}
-			{/* 
-            <div className="form-group">
-                <label htmlFor="createdBy">Created By:</label>
-                <input
-                    type="text"
-                    id="createdBy"
-                    name="createdBy"
-                    value={createdBy}
-                    readOnly
-                />
-            </div> */}
-			{/* 
-            <div className="form-group">
-                <label htmlFor="listId">List ID:</label>
-                <input type="text" id="listId" name="listId" readOnly value={listId} />
-            </div>
-
-            <div className="form-group">
-                <label htmlFor="itemId">Item ID:</label>
-                <input type="text" id="itemId" readOnly name="itemId" value={itemId} />
-            </div> */}
-
 			<button
-				type="submit"
+				type="button"
 				className="submit-button"
-				onSubmit={handleSubmit}
-				style={{ backgroundColor: btnDisabled ? "gray" : "blue" }}
-				disabled={btnDisabled}
+				onClick={handleSubmit}
+				style={{ backgroundColor: props.btnDisabled ? "gray" : "blue" }}
+				disabled={props.btnDisabled}
 			>
 				update
 			</button>

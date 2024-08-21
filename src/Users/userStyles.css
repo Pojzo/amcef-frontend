@@ -1,0 +1,93 @@
+/* Style for the modal overlay */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000; /* Ensure it is on top of other content */
+}
+
+/* Style for the modal content */
+.modal-content {
+	background-color: #fff;
+	border-radius: 8px;
+	padding: 20px;
+	max-width: 600px;
+	width: 100%;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+/* Style for the modal header */
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.modal-header h2 {
+	margin: 0;
+}
+
+.close-button {
+	background: none;
+	border: none;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+/* Style for the list of users */
+.user-list {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.user-list-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+.user-list-item:last-child {
+	border-bottom: none;
+}
+
+.user-list-item .email {
+	font-size: 16px;
+}
+
+.user-list-item .delete-button {
+	background: none;
+	border: none;
+	color: #f44336;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.add-user-container {
+	margin-top: 20px;
+	display: flex;
+	justify-content: flex-start;
+}
+
+.add-user-container * {
+	margin-right: 10px;
+}
+
+.add-btn {
+	background: #4caf50;
+	color: #fff;
+	border: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+}

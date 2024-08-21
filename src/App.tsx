@@ -1,12 +1,12 @@
 import { createContext, useEffect, useState } from "react";
-import Login from "./auth/Login";
-import Register from "./auth/Register";
+import Login from "./Auth/Login";
+import Register from "./Auth/Register";
 
-import LoginStatus from "./auth/LoginStatus";
+import LoginStatus from "./Auth/LoginStatus";
 import useCheckLoggedIn from "./hooks/auth/useCheckLoggedIn";
 import useLogout from "./hooks/auth/useLogout";
 import ListPage from "./Lists/ListPage";
-import { useAuth } from "./auth/AuthContext";
+import { useAuth } from "./Auth/AuthContext";
 
 const elementMap = {
 	login: Login,

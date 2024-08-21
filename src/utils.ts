@@ -16,7 +16,6 @@ const getStorageData = async (key: string): Promise<string | null> => {
 };
 
 export const storeJwtToken = async (token: string): Promise<string | null> => {
-	console.log("storing jwt token", token);
 	try {
 		await setStorageData("jwtToken", token);
 		return token;
