@@ -1,4 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import {
+	Form,
+	FormGroup,
+	Label,
+	Input,
+	Button,
+	FormFeedback,
+} from "reactstrap";
 import { ItemType, ItemFlag, ItemUpdateType } from "../types";
 import "./listStyles.css";
 
@@ -12,7 +20,6 @@ interface ItemProps {
 const Item = (props: ItemProps) => {
 	const itemId = props.item.itemId;
 	const listId = props.item.listId;
-	// const createdBy = props.item.createdBy;
 
 	const [title, setTitle] = useState(props.item.title);
 	const [description, setDescription] = useState(props.item.description);
@@ -22,24 +29,19 @@ const Item = (props: ItemProps) => {
 	const [flag, setFlag] = useState(props.item.flag);
 
 	const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.stopPropagation();
 		setTitle(e.target.value);
 	};
 
-	const handleDescriptionChange = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		e.stopPropagation();
+	const handleDescriptionChange = (e: any) => {
 		setDescription(e.target.value);
 	};
 
-	const handleDeadlineChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.stopPropagation();
+	const handleDeadlineChange = (e: any) => {
 		setDeadline(e.target.value);
 	};
 
-	const handleOptionChange = (option: ItemFlag) => {
-		setFlag(option);
+	const handleFlagChange = (e: any) => {
+		setFlag(e.target.value as ItemFlag);
 	};
 
 	const handleSubmit = (e: React.FormEvent) => {
@@ -55,86 +57,90 @@ const Item = (props: ItemProps) => {
 	};
 
 	return (
-		<form
-			className="item-form"
-			// onSubmit={handleSubmit}
-			onClick={(e) => e.stopPropagation()}
-		>
-			<div className="form-group">
-				<label htmlFor="title">Title:</label>
-				<input
+		<Form className="item-form" onClick={(e) => e.stopPropagation()}>
+			<FormGroup>
+				<Label for="title">Title:</Label>
+				<Input
 					type="text"
 					id="title"
-					name="title"
 					value={title}
-					readOnly={props.btnDisabled ? true : false}
+					readOnly={props.btnDisabled}
 					onChange={handleTitleChange}
+					// invalid={props.btnDisabled}
 				/>
-			</div>
+				<FormFeedback>Title is required</FormFeedback>
+			</FormGroup>
 
-			<div className="form-group">
-				<label htmlFor="description">Description:</label>
-				<input
+			<FormGroup>
+				<Label for="description">Description:</Label>
+				<Input
 					type="text"
 					id="description"
-					name="description"
 					value={description}
-					readOnly={props.btnDisabled ? true : false}
+					readOnly={props.btnDisabled}
 					onChange={handleDescriptionChange}
+					// invalid={props.btnDisabled}
 				/>
-			</div>
+				<FormFeedback>Description is required</FormFeedback>
+			</FormGroup>
 
-			<div className="form-group">
-				<label htmlFor="deadline">Deadline:</label>
-				<input
+			<FormGroup>
+				<Label for="deadline">Deadline:</Label>
+				<Input
 					type="datetime-local"
 					id="deadline"
-					name="deadline"
 					value={deadline}
-					readOnly={props.btnDisabled ? true : false}
+					readOnly={props.btnDisabled}
 					onChange={handleDeadlineChange}
+					// invalid={props.btnDisabled}
 				/>
-			</div>
+				<FormFeedback>Deadline is required</FormFeedback>
+			</FormGroup>
 
-			<div className="form-group">
-				<label htmlFor="flag">Flag:</label>
-				<select
+			<FormGroup>
+				<Label for="flag">Flag:</Label>
+				<Input
+					type="select"
 					id="flag"
-					name="flag"
 					value={flag}
 					disabled={props.btnDisabled}
-					onChange={(e) =>
-						handleOptionChange(e.target.value as ItemFlag)
-					}
+					onChange={handleFlagChange}
 				>
-					<option value="active">Active</option>
-					<option value="finished">Finished</option>
-					<option value="aborted">Aborted</option>
-				</select>
+					<option value={ItemFlag.Active}>Active</option>
+					<option value={ItemFlag.Finished}>Finished</option>
+					<option value={ItemFlag.Aborted}>Aborted</option>
+				</Input>
+			</FormGroup>
+			<FormGroup>
+				<Label for="item-creator">Creator</Label>
+				<Input
+					type="text"
+					id="item-creator"
+					value={props.item.creatorEmail}
+					readOnly={true}
+					className="text-muted"
+				></Input>
+			</FormGroup>
+
+			<div className="button-group">
+				{!props.btnDisabled && (
+					<Button
+						color="danger"
+						onClick={props.onItemDelete}
+						className="mr-2 me-2"
+					>
+						Delete Item
+					</Button>
+				)}
+				<Button
+					color={props.btnDisabled ? "secondary" : "primary"}
+					onClick={handleSubmit}
+					disabled={props.btnDisabled}
+				>
+					Update
+				</Button>
 			</div>
-			{!props.btnDisabled && (
-				<button
-					type="button"
-					className="submit-button"
-					style={{
-						color: "white",
-						backgroundColor: "red",
-					}}
-					onClick={props.onItemDelete}
-				>
-					Delete item
-				</button>
-			)}
-			<button
-				type="button"
-				className="submit-button"
-				onClick={handleSubmit}
-				style={{ backgroundColor: props.btnDisabled ? "gray" : "blue" }}
-				disabled={props.btnDisabled}
-			>
-				update
-			</button>
-		</form>
+		</Form>
 	);
 };
 

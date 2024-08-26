@@ -27,7 +27,6 @@ const ListPage = () => {
 
 	const handleGetLists = async () => {
 		const response = await getLists();
-		console.log(response);
 		setLists(response || []);
 	};
 

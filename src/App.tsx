@@ -1,12 +1,11 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Login from "./Auth/Login";
 import Register from "./Auth/Register";
-
 import LoginStatus from "./Auth/LoginStatus";
-import useCheckLoggedIn from "./hooks/auth/useCheckLoggedIn";
 import useLogout from "./hooks/auth/useLogout";
 import ListPage from "./Lists/ListPage";
 import { useAuth } from "./Auth/AuthContext";
+import { Button, Container, Navbar, Nav } from "reactstrap";
 
 const elementMap = {
 	login: Login,
@@ -27,6 +26,7 @@ const App = () => {
 	const handleLoginButtonClick = () => {
 		setCurrentPage("login");
 	};
+
 	const { isLoggedIn, checkLoggedIn } = useAuth();
 
 	const onLoginStatusChanged = async () => {
@@ -45,49 +45,53 @@ const App = () => {
 
 	useEffect(() => {
 		checkLoggedIn();
+		if (isLoggedIn) {
+			setCurrentPage("lists");
+		}
 	}, [isLoggedIn, checkLoggedIn]);
 
 	return (
 		<div className="App">
-			<LoginStatus isLoggedIn={isLoggedIn} />
-			<div className="nav-buttons">
-				{!isLoggedIn && (
-					<button
-						className="nav-button"
-						type="button"
-						onClick={handleRegisterButtonClick}
-					>
-						<p style={{ color: "white" }}>Go to register</p>
-					</button>
-				)}
-				{!isLoggedIn && (
-					<button
-						className="nav-button"
-						type="button"
-						onClick={handleLoginButtonClick}
-					>
-						<p style={{ color: "white" }}>Go to login</p>
-					</button>
-				)}
-				{isLoggedIn && (
-					<button
-						className="nav-button"
-						style={{ backgroundColor: "red" }}
-						type="button"
-						onClick={handleLogoutButtonClick}
-					>
-						<p style={{ color: "white" }}>Logout</p>
-					</button>
-				)}
-				<button
-					className="nav-button"
-					type="button"
-					onClick={handleListsButtonClick}
-				>
-					<p style={{ color: "white" }}>Lists</p>
-				</button>
-			</div>
-			<CurrentComponent onChange={onLoginStatusChanged} />
+			<Navbar color="dark" dark expand="md">
+				<Container>
+					<LoginStatus isLoggedIn={isLoggedIn} />
+					<Nav className="ml-auto" navbar>
+						{!isLoggedIn && (
+							<Button
+								color="primary"
+								onClick={handleRegisterButtonClick}
+								className="me-2"
+							>
+								Register
+							</Button>
+						)}
+						{!isLoggedIn && (
+							<Button
+								color="primary"
+								onClick={handleLoginButtonClick}
+								className="me-2"
+							>
+								Login
+							</Button>
+						)}
+						{isLoggedIn && (
+							<Button
+								color="danger"
+								onClick={handleLogoutButtonClick}
+								className="me-2"
+							>
+								Logout
+							</Button>
+						)}
+						<Button color="info" onClick={handleListsButtonClick}>
+							Lists
+						</Button>
+					</Nav>
+				</Container>
+			</Navbar>
+			<Container className="mt-3">
+				<CurrentComponent onChange={onLoginStatusChanged} />
+			</Container>
 		</div>
 	);
 };

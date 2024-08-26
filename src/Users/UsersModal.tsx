@@ -1,6 +1,15 @@
 import { useState } from "react";
+import {
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+	Button,
+	Input,
+	FormGroup,
+	Label,
+} from "reactstrap";
 import UserRow from "./UserRow";
-import "./userStyles.css";
 import useAddUserToList from "../hooks/users/useAddUserToList";
 
 const UsersModal = ({
@@ -21,42 +30,29 @@ const UsersModal = ({
 	const handleDelete = (email: string) => {
 		onDeleteUser(email);
 	};
+
 	if (!open) {
 		return null;
 	}
 
-	const handleOverlayClick = (e: React.MouseEvent) => {
-		e.preventDefault();
-		if (e.target === e.currentTarget) {
-			onClose();
-		}
-	};
-
 	return (
-		<div className="modal-overlay" onClick={handleOverlayClick}>
-			<div className="modal-content">
-				<div className="modal-header">
-					<h2>Users</h2>
-					<button className="close-button" onClick={onClose}></button>
-				</div>
-				<div className="add-user-container">
-					<label htmlFor="add-user">Add user</label>
-					<input
+		<Modal isOpen={open} toggle={onClose}>
+			<ModalHeader toggle={onClose}>Users</ModalHeader>
+			<ModalBody>
+				<FormGroup>
+					<Label for="add-user">Add user</Label>
+					<Input
 						type="text"
 						placeholder="email"
-						name="add-user"
+						id="add-user"
 						value={addUser}
 						onChange={(e) => setAddUser(e.target.value)}
 					/>
-					<button
-						type="button"
-						className="add-btn"
-						onClick={() => onAddUser(addUser)}
-					>
-						Add
-					</button>
-				</div>
-				<ul className="user-list">
+				</FormGroup>
+				<Button color="primary" onClick={() => onAddUser(addUser)}>
+					Add
+				</Button>
+				<ul className="list-unstyled mt-3">
 					{users.map((user, index) => (
 						<UserRow
 							key={index}
@@ -65,8 +61,13 @@ const UsersModal = ({
 						/>
 					))}
 				</ul>
-			</div>
-		</div>
+			</ModalBody>
+			<ModalFooter>
+				<Button color="secondary" onClick={onClose}>
+					Close
+				</Button>
+			</ModalFooter>
+		</Modal>
 	);
 };
 

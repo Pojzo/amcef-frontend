@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Form, FormGroup, Label, Input, Button, Alert } from "reactstrap";
 import useCreateList from "../hooks/lists/useCreateList";
 
 interface CreateListFormProps {
@@ -24,33 +25,27 @@ const CreateListForm = ({ onCreate }: CreateListFormProps) => {
 	};
 
 	return (
-		<form
+		<Form
 			onSubmit={handleSubmit}
-			style={{
-				marginBottom: "20px",
-				position: "absolute",
-				right: "20px",
-				top: "100px",
-			}}
+			className="position-absolute"
+			style={{ right: "20px", top: "100px", maxWidth: "300px" }}
 		>
-			<div style={{ marginBottom: "10px" }}>
-				<label htmlFor="title" style={{ marginRight: "10px" }}>
-					List Title:
-				</label>
-				<input
+			<FormGroup>
+				<Label for="title">List Title:</Label>
+				<Input
 					id="title"
 					type="text"
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
 					placeholder="Enter list title"
-					style={{ padding: "5px", width: "200px" }}
+					className="mb-2"
 				/>
-			</div>
-			{submitError && <p style={{ color: "red" }}>{submitError}</p>}
-			<button type="submit" style={{ padding: "5px 10px" }}>
+			</FormGroup>
+			{submitError && <Alert color="danger">{submitError}</Alert>}
+			<Button color="primary" type="submit" className="mt-2">
 				Create List
-			</button>
-		</form>
+			</Button>
+		</Form>
 	);
 };
 

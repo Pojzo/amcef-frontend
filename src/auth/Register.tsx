@@ -1,8 +1,9 @@
 import { useState } from "react";
 import useRegister from "../hooks/auth/useRegister";
-
-import "./authStyles.css";
 import { useAuth } from "./AuthContext";
+import { storeJwtToken } from "../utils";
+import { Form, FormGroup, Input, Button, Spinner, Alert } from "reactstrap";
+import "./authStyles.css";
 
 const Register = ({ onChange }: { onChange: () => void }) => {
 	const { error, loading, register } = useRegister();
@@ -14,32 +15,46 @@ const Register = ({ onChange }: { onChange: () => void }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		onChange();
 		e.preventDefault();
-		await register(email, password);
+		const response = await register(email, password);
+		await storeJwtToken(response || "");
 		await checkLoggedIn();
 	};
+
 	return (
-		<div className="register">
-			<h1>Register</h1>
-			<form className="form" onSubmit={handleSubmit}>
-				<input
-					type="email"
-					placeholder="Email"
-					onChange={(e) => setEmail(e.target.value)}
-					value={email}
-				/>
-				<input
-					type="password"
-					placeholder="Password"
-					onChange={(e) => setPassword(e.target.value)}
-					value={password}
-				/>
-				<button type="submit">Register</button>
-			</form>
-			{loading && <p>Loading...</p>}
+		<div className="register-container">
+			<h1 className="text-center">Register</h1>
+			<Form className="register-form" onSubmit={handleSubmit}>
+				<FormGroup>
+					<Input
+						type="email"
+						placeholder="Email"
+						onChange={(e) => setEmail(e.target.value)}
+						value={email}
+						className="mb-3"
+					/>
+				</FormGroup>
+				<FormGroup>
+					<Input
+						type="password"
+						placeholder="Password"
+						onChange={(e) => setPassword(e.target.value)}
+						value={password}
+						className="mb-3"
+					/>
+				</FormGroup>
+				<Button color="primary" type="submit" block>
+					Register
+				</Button>
+			</Form>
+			{loading && (
+				<div className="text-center mt-3">
+					<Spinner color="primary" />
+				</div>
+			)}
 			{error && (
-				<p style={{ color: "red" }}>
+				<Alert color="danger" className="mt-3">
 					{error.includes("409") ? "User already exists" : error}
-				</p>
+				</Alert>
 			)}
 		</div>
 	);

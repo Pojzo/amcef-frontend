@@ -21,7 +21,6 @@ const useDeleteItem = () => {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 
-			console.log(response);
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
 				setDeleteItemError(err.message);

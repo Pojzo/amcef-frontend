@@ -14,7 +14,8 @@ export interface ItemBaseType {
 export interface ItemType extends ItemBaseType {
 	listId: number;
 	itemId: number;
-	createdBy: number;
+	iscreator: boolean;
+	creatorEmail: string;
 }
 
 export interface ItemCreateType extends ItemBaseType {

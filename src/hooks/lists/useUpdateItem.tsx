@@ -30,7 +30,6 @@ const useUpdateItem = () => {
 			const response = await axios.put(url, data, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			console.log(response);
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
 				setUpdateItemError(err.message);

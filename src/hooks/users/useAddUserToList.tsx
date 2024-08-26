@@ -15,7 +15,6 @@ const useAddUserToList = () => {
 			setAddUserToListError(null);
 			setAddUserToListLoading(true);
 
-			console.log("adding user to list", listId, email);
 			const url = `${BASE_URL}/lists/${listId}/users/`;
 			const token = await getJwtToken();
 			if (!token) {
